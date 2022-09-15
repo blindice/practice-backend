@@ -3,6 +3,7 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { ProductModule } from './modules/product/product.module';
+import 'dotenv/config';
 
 @Module({
   imports: [
