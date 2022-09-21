@@ -8,18 +8,22 @@ import {
   ParseIntPipe,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
-import { ApiResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiResponse } from '@nestjs/swagger';
 import { DeleteResult } from 'typeorm';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { CreateProductDto } from './dto/createProductDto';
 import { ProductDetailsDto } from './dto/productsDetailsDto';
 import { UpdateProductDto } from './dto/updateProductDto';
 import { ProductService } from './product.service';
 
+@ApiBearerAuth()
 @Controller('product')
 export class ProductController {
   constructor(@Inject('Service') private svc: ProductService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Get()
   @ApiResponse({
     status: 200,
@@ -32,6 +36,7 @@ export class ProductController {
     return result;
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
   @ApiResponse({
     status: 200,
@@ -43,6 +48,7 @@ export class ProductController {
     return product;
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post()
   @ApiResponse({
     status: 201,
@@ -54,6 +60,7 @@ export class ProductController {
     return newProduct;
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   @ApiResponse({
     status: 200,
@@ -65,6 +72,7 @@ export class ProductController {
     return result;
   }
 
+  @UseGuards(JwtAuthGuard)
   @Put(':id')
   @ApiResponse({
     status: 200,
